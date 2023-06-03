@@ -1,26 +1,11 @@
-using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PlatformPlatform.SharedKernel.DomainCore.Identity;
 
 namespace PlatformPlatform.SharedKernel.InfrastructureCore.EntityFramework;
 
 public static class ModelBuilderExtensions
 {
-    /// <summary>
-    ///     This method is used to tell Entity Framework how to map a strongly typed ID to a SQL column using the
-    ///     underlying type of the strongly-typed ID.
-    /// </summary>
-    public static void MapStronglyTypedId<T, TId>(this ModelBuilder modelBuilder, Expression<Func<T, TId>> expression)
-        where T : class where TId : StronglyTypedId<TId>
-    {
-        modelBuilder
-            .Entity<T>()
-            .Property(expression)
-            .HasConversion(v => v.Value, v => (Activator.CreateInstance(typeof(TId), v) as TId)!);
-    }
-
     /// <summary>
     ///     This method is used to tell Entity Framework to store all enum properties as strings in the database.
     /// </summary>

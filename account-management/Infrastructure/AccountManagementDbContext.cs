@@ -20,11 +20,10 @@ public sealed class AccountManagementDbContext : SharedKernelDbContext<AccountMa
         base.OnModelCreating(modelBuilder);
 
         // Tenant
-        modelBuilder.MapStronglyTypedId<Tenant, TenantId>(t => t.Id);
+        modelBuilder.Entity<Tenant>().Property(x => x.Id).HasConversion<TenantId.EfCoreValueConverter>();
 
         // User
-        modelBuilder.MapStronglyTypedId<User, UserId>(u => u.Id);
-        modelBuilder.MapStronglyTypedId<User, TenantId>(u => u.TenantId);
+        modelBuilder.Entity<User>().Property(x => x.Id).HasConversion<UserId.EfCoreValueConverter>();
         modelBuilder.Entity<User>().HasOne<Tenant>().WithMany().HasForeignKey(u => u.TenantId)
             .HasPrincipalKey(t => t.Id);
     }

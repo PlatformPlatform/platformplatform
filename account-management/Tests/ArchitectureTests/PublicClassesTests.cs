@@ -19,6 +19,7 @@ public class PublicClassesTests
             .That()
             .ArePublic()
             .And().AreNotAbstract()
+            .And().DoNotHaveName("EfCoreValueConverter")
             .Should()
             .BeSealed()
             .GetResult();

@@ -1,14 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PlatformPlatform.SharedKernel.DomainCore.Identity;
 
 namespace PlatformPlatform.SharedKernel.DomainCore.Entities;
 
 /// <summary>
-///     The Entity class is a base class for entities which represents business objects.
-///     Entities are a DDD concept, where an entity is a business object that has a unique identity.
-///     If two entities have the same identity, they are considered to be the same entity.
-///     It is recommended to use a <see cref="StronglyTypedId{T}" /> for the ID to make the domain more meaningful.
+///     The Entity class is a base class for entities which represents business objects. Entities are a DDD concept,
+///     where an entity is a business object that has a unique identity. If two entities have the same identity, they
+///     are considered to be the same entity. It is recommended to use a strongly typed IDs to make the domain more
+///     meaningful.
 /// </summary>
 public abstract class Entity<T> : IEquatable<Entity<T>> where T : IComparable<T>
 {

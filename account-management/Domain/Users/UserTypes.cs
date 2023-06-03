@@ -1,13 +1,15 @@
 using JetBrains.Annotations;
 using PlatformPlatform.SharedKernel.DomainCore.Identity;
+using StronglyTypedIds;
 
 namespace PlatformPlatform.AccountManagement.Domain.Users;
 
-public sealed record UserId(long Value) : StronglyTypedId<UserId>(Value)
+[StronglyTypedId(StronglyTypedIdBackingType.Long, StronglyTypedIdConverter.EfCoreValueConverter)]
+public partial struct UserId
 {
-    public override string ToString()
+    public static UserId NewId()
     {
-        return Value.ToString();
+        return new UserId(IdGenerator.NewId());
     }
 
     public static explicit operator UserId(string value)

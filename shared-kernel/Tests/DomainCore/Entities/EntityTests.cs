@@ -2,6 +2,7 @@ using FluentAssertions;
 using JetBrains.Annotations;
 using PlatformPlatform.SharedKernel.DomainCore.Entities;
 using PlatformPlatform.SharedKernel.DomainCore.Identity;
+using StronglyTypedIds;
 using Xunit;
 
 namespace PlatformPlatform.SharedKernel.Tests.DomainCore.Entities;
@@ -165,7 +166,19 @@ public static class EntityTests
 }
 
 [UsedImplicitly]
-public sealed record StronglyTypedId(long Value) : StronglyTypedId<StronglyTypedId>(Value);
+[StronglyTypedId(StronglyTypedIdBackingType.Long, StronglyTypedIdConverter.EfCoreValueConverter)]
+public partial struct StronglyTypedId
+{
+    public static StronglyTypedId NewId()
+    {
+        return new StronglyTypedId(IdGenerator.NewId());
+    }
+
+    public static explicit operator StronglyTypedId(string value)
+    {
+        return new StronglyTypedId(Convert.ToInt64(value));
+    }
+}
 
 [UsedImplicitly(ImplicitUseTargetFlags.Members)]
 public class StronglyTypedIdEntity : Entity<StronglyTypedId>
